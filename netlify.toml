@@ -1,0 +1,34 @@
+[build]
+  command = "npm run build"
+  publish = "dist"
+
+[build.environment]
+  NODE_VERSION = "22"
+
+# Edge proxy rewrite for GitHub IPTV playlists to avoid any CORS or network filter issues on Netlify
+[[redirects]]
+  from = "/api/iptv/*"
+  to = "https://iptv-org.github.io/iptv/:splat"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/api/github-iptv/*"
+  to = "https://raw.githubusercontent.com/iptv-org/iptv/master/streams/:splat"
+  status = 200
+  force = true
+
+# Single Page Application (SPA) routing fallback
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
+
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Frame-Options = "SAMEORIGIN"
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "no-referrer-when-downgrade"
+    Permissions-Policy = "autoplay=(self), fullscreen=(self)"
+    Access-Control-Allow-Origin = "*"

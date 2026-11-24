@@ -1,0 +1,6 @@
+# Netlify Edge Proxy Rewrites for GitHub IPTV M3U Playlists
+/api/iptv/*  https://iptv-org.github.io/iptv/:splat  200!
+/api/github-iptv/*  https://raw.githubusercontent.com/iptv-org/iptv/master/streams/:splat  200!
+
+# SPA Fallback for client-side routing
+/*  /index.html  200
